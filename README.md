@@ -35,7 +35,7 @@ $ protoc \
 - Code for populating, serializing, and retrieving HelloRequest and HelloReply message types.
 - Generated client and server code.
 
-## Install grpcurl
+## Install [grpcurl](https://github.com/fullstorydev/grpcurl)
 
 ```shell
 brew install grpcurl
