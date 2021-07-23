@@ -1,0 +1,21 @@
+syntax = "proto3";
+package user;
+
+option go_package = "github.com/tao-yi/go-grpc-demo/proto/user";
+
+message UserID {
+  int64 id = 1;
+}
+
+message UserInfo {
+  int64 id = 1;
+  string name = 2;
+  int32 age = 3;
+  Gender gender = 4;
+
+  enum Gender {
+    UNKNOWN = 0;
+    MALE = 1;
+    FEMALE = 2;
+  }
+}

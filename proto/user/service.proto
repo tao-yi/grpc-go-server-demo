@@ -1,0 +1,12 @@
+syntax = "proto3";
+package user;
+
+option go_package = "github.com/tao-yi/go-grpc-demo/proto/user";
+
+import "proto/user/message.proto";
+import "proto/article/message.proto";
+
+service UserService {
+  rpc GetUserInfo(UserID) returns (UserInfo);
+  rpc GetArticles(UserID) returns (article.Articles);
+}
