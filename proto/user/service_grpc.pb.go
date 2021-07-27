@@ -33,7 +33,7 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 
 func (c *userServiceClient) GetUserInfo(ctx context.Context, in *UserID, opts ...grpc.CallOption) (*UserInfo, error) {
 	out := new(UserInfo)
-	err := c.cc.Invoke(ctx, "/user.UserService/GetUserInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.service.v1.UserService/GetUserInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *userServiceClient) GetUserInfo(ctx context.Context, in *UserID, opts ..
 
 func (c *userServiceClient) GetArticles(ctx context.Context, in *UserID, opts ...grpc.CallOption) (*article.Articles, error) {
 	out := new(article.Articles)
-	err := c.cc.Invoke(ctx, "/user.UserService/GetArticles", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.service.v1.UserService/GetArticles", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func _UserService_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.UserService/GetUserInfo",
+		FullMethod: "/user.service.v1.UserService/GetUserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetUserInfo(ctx, req.(*UserID))
@@ -109,7 +109,7 @@ func _UserService_GetArticles_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.UserService/GetArticles",
+		FullMethod: "/user.service.v1.UserService/GetArticles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetArticles(ctx, req.(*UserID))
@@ -121,7 +121,7 @@ func _UserService_GetArticles_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.UserService",
+	ServiceName: "user.service.v1.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

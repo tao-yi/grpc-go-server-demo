@@ -3,8 +3,9 @@
 - [Guick Start | Go](https://grpc.io/docs/languages/go/quickstart/)
 
 ```shell
-$ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
-$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
+$ go get github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+$ go get google.golang.org/protobuf/cmd/protoc-gen-go
+$ go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 # Update your PATH so that the protoc compiler can find the plugins:
 $ export PATH="$PATH:$(go env GOPATH)/bin"
@@ -43,6 +44,10 @@ brew install grpcurl
 # list registered services
 grpcurl -plaintext localhost:50051 list
 
-grpcurl -plaintext localhost:50051 user.UserService/GetUserInfo
+grpcurl -plaintext localhost:50051 v1.UserService/GetUserInfo
 grpcurl -plaintext localhost:50051 user.UserService/GetArticles
 ```
+
+## import googleapis
+
+https://github.com/googleapis/googleapis/tree/master/google/api
