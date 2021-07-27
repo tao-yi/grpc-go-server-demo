@@ -1,12 +1,12 @@
 syntax = "proto3";
 package user.service.v1;
 
-option go_package = "github.com/tao-yi/go-grpc-demo/proto/user";
+option go_package = ".;user";
 
-import "proto/article/message.proto";
-import "proto/user/message.proto";
+import "article/message.proto";
+import "user/message.proto";
 
-import "proto/google/api/annotations.proto";
+import "google/api/annotations.proto";
 
 service UserService {
   rpc GetUserInfo(UserID) returns (UserInfo) {

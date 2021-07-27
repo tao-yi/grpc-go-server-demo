@@ -44,10 +44,23 @@ brew install grpcurl
 # list registered services
 grpcurl -plaintext localhost:50051 list
 
-grpcurl -plaintext localhost:50051 v1.UserService/GetUserInfo
+grpcurl -plaintext localhost:50051 user.service.v1.UserService/GetUserInfo
 grpcurl -plaintext localhost:50051 user.UserService/GetArticles
 ```
 
 ## import googleapis
 
 https://github.com/googleapis/googleapis/tree/master/google/api
+
+## Install [Evans](https://github.com/ktr0731/evans#macos)
+
+```shell
+$ brew tap ktr0731/evans
+$ brew install evans
+```
+
+If your server is enabling gRPC reflection, you can launch Evans with only -r (--reflection) option.
+
+```shell
+$ evans -r repl
+```

@@ -7,27 +7,27 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/tao-yi/go-grpc-demo/proto/article"
-	"github.com/tao-yi/go-grpc-demo/proto/user"
+	"github.com/tao-yi/go-grpc-demo/pb"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 type server struct {
-	user.UnimplementedUserServiceServer
+	pb.UnimplementedUserServiceServer
 }
 
-func (s *server) GetUserInfo(context.Context, *user.UserID) (*user.UserInfo, error) {
-	return &user.UserInfo{
+func (s *server) GetUserInfo(context.Context, *pb.UserID) (*pb.UserInfo, error) {
+	return &pb.UserInfo{
 		Id:     1,
 		Name:   "Hell",
 		Age:    25,
-		Gender: user.UserInfo_MALE}, nil
+		Gender: pb.UserInfo_MALE}, nil
 }
 
-func (s *server) GetArticles(context.Context, *user.UserID) (*article.Articles, error) {
-	return &article.Articles{
-		Articles: []*article.Articles_Article{
+func (s *server) GetArticles(context.Context, *pb.UserID) (*pb.Articles, error) {
+	return &pb.Articles{
+		Articles: []*pb.Articles_Article{
 			{
 				Id:    2,
 				Title: "title",
@@ -43,7 +43,8 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	user.RegisterUserServiceServer(s, &server{})
+	userServiceServer := &server{}
+	pb.RegisterUserServiceServer(s, userServiceServer)
 	reflection.Register(s)
 
 	go func() {
@@ -53,21 +54,11 @@ func main() {
 		}
 	}()
 
-	// Create a client connection to the gRPC server we just started
-	// This is where the gRPC-Gateway proxies the requests
-	conn, err := grpc.DialContext(
-		context.Background(),
-		"0.0.0.0:50051",
-		grpc.WithBlock(),
-		grpc.WithInsecure(),
-	)
-	if err != nil {
-		log.Fatalln("Failed to dial server:", err)
-	}
-
 	gwmux := runtime.NewServeMux()
-	// Register Greeter
-	err = user.RegisterUserServiceHandler(context.Background(), gwmux, conn)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	err = pb.RegisterUserServiceHandlerServer(ctx, gwmux, userServiceServer)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}

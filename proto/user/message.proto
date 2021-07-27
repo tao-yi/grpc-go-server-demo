@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user.service.v1;
 
-option go_package = "github.com/tao-yi/go-grpc-demo/proto/user";
+option go_package = ".;user";
 
 message UserID {
   int64 id = 1;
