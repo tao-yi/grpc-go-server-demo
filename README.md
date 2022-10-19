@@ -11,6 +11,25 @@ $ go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
 $ export PATH="$PATH:$(go env GOPATH)/bin"
 ```
 
+## Package
+https://developers.google.com/protocol-buffers/docs/proto3#packages
+You can add a optional package specifier to a `.proto` file to prevent name clashes between protocol message types
+```
+package foo.bar;
+
+message Open {
+}
+```
+You can then use the packages specifier when defining fields of your message type:
+```
+message Foo {
+    foo.bar.Open open = 1;
+}
+```
+The way a package specifier affects the generated code depends on you chosen language:
+- In Go, the package is used as the Go package name, unless you explicitly provide an `option go_package` in your `.proto` file
+- In Python, the package directive is ignored, since Python modules are organized according to their location in the file system.
+
 ## Generate gRPC code
 
 ```shell
